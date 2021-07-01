@@ -61,7 +61,9 @@ func fetch() {
 	defer cancel()
 
 	err := chromedp.Run(ctx,
+		chromedp.EmulateViewport(1920, 1080, chromedp.EmulateScale(2.0)),
 		chromedp.Navigate(doc88Link),
+		chromedp.Sleep(time.Duration(1)*time.Second),
 		chromedp.ActionFunc(func(ctx context.Context) error {
 			chromedp.Evaluate(`document.querySelectorAll('#continueButton').length === 1`, &hasContinueButton).Do(ctx)
 			chromedp.Evaluate(`document.title`, &docTitle).Do(ctx)
